@@ -1,0 +1,11 @@
+{
+  "type": "core",
+  "name": "Smart User Slug Hider",
+  "url": "https://wordpress.org/plugins/smart-user-slug-hider/",
+  "build": "distignore",
+  "channels": { "wordpress_org": true, "edd": false },
+  "main_file": "smart-user-slug-hider.php",
+  "version_checks": [
+    { "file": "loader.php", "pattern": "'version'\\s*=>\\s*'([^']+)'" }
+  ]
+}
