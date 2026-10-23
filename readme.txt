@@ -1,9 +1,9 @@
 === Smart User Slug Hider ===
-Contributors: petersplugins
-Tags: author, authors, user, users, url, link, security, secure, login, permalink, authorlink, author link, userlink, user link, authorpage, author page, classicpress
+Contributors: wpusermanager, petersplugins
+Tags: author, author page, username, security, permalink
 Requires at least: 4.0
-Tested up to: 6.3
-Stable tag: 4.0.6
+Tested up to: 7.1
+Stable tag: 4.0.7
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,13 +14,9 @@ Hide usernames in Author Pages URLs to enhance Security
 
 The Smart User Slug Hider Plugin hides usernames in Author Pages URLs to enhance Security
 
-== Retired Plugin ==
+Originally created by Peter Raschendorfer, maintained by WP User Manager since October 2026.
 
-Development, maintenance and support of this plugin has been retired in october 2023. You can use this plugin as long as is works for you. 
-
-There will be no more updates and I won't answer any support questions. Thanks for your understanding.
-
-Feel free to fork this plugin.
+Questions or problems? Ask in the [support forum](https://wordpress.org/support/plugin/smart-user-slug-hider/).
 
 == Usage ==
 
@@ -58,6 +54,14 @@ The plugin adds two functions that can be used in theme files:
 * This plugin does not send any data to external servers
 
 == Changelog ==
+
+= 4.0.7 (2026-10-23) =
+* Maintained again, by WP User Manager
+* Fixed: empty author links and 404 author pages on servers with OpenSSL 3. Existing author URLs stay the same
+* Fixed: the settings screen could run on another plugin's copy of the shared framework, such as 404page's
+* Fixed: escape the author name in the `[smart_user_link]` shortcode
+* Removed the retirement notice and dead help links
+* Tested up to WordPress 7.1
 
 = 4.0.6 (2024-04-17) URGENT BUGFIX =
 * Bugfix after Cleanup
@@ -117,6 +121,9 @@ The plugin adds two functions that can be used in theme files:
 * Initial Release
 
 == Upgrade Notice ==
+
+= 4.0.7 =
+Fixes empty author links on servers with OpenSSL 3. Author URLs stay the same.
 
 = 4.0.2 =
 do not rely on SERVER_ADDR only

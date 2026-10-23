@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 if ( !class_exists( 'PP_Smart_User_Slug_Hider_Admin' ) ) {
   
-  class PP_Smart_User_Slug_Hider_Admin extends PPF09_Admin {
+  class PP_Smart_User_Slug_Hider_Admin extends WPUMPPF1_Admin {
 
     
     /**

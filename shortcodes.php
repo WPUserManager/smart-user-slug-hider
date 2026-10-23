@@ -18,7 +18,7 @@ add_shortcode( 'smart_user_url', function( $atts ) { return esc_url( get_author_
 
 
 // link to the current post author’s profile page
-add_shortcode( 'smart_user_link', function( $atts ) { return '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . get_the_author() . '</a>'; } );
+add_shortcode( 'smart_user_link', function( $atts ) { return '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a>'; } );
 
 
 ?>

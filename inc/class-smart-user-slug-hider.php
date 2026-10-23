@@ -16,7 +16,7 @@
  */
 if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
 
-  class PP_Smart_User_Slug_Hider extends PPF09_Plugin {
+  class PP_Smart_User_Slug_Hider extends WPUMPPF1_Plugin {
     
     
     /**
@@ -43,7 +43,18 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
     
     
     private $_key;
-    
+
+
+    /**
+     * Blowfish in plain PHP, used where OpenSSL has no BF-ECB (OpenSSL 3)
+     *
+     * @see    class-smart-user-slug-hider-blowfish.php
+     * @since  4.0.7
+     * @var    object|false|null null until first use, false while OpenSSL does the work
+     * @access private
+     */
+    private $_blowfish = null;
+
 
 	/**
 	 * do plugin init
@@ -277,21 +288,65 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
 		 * helper function to encrypt author name
 		 */
     private function encrypt( $id ) {
-      
+
       // since 4.0.0 mcrypt_encrypt is no longer supported, always use openssl_encrypt
+      // since 4.0.7 fall back to plain PHP where OpenSSL has no Blowfish
+      if ( $this->blowfish() ) {
+        return bin2hex( $this->blowfish()->encrypt( base_convert( $id, 10, 36 ) ) );
+      }
+
       return bin2hex( openssl_encrypt( base_convert( $id, 10, 36 ), 'BF-ECB', $this->_key, OPENSSL_RAW_DATA ) );
-      
+
     }
 
-    
+
     /**
 		 * helper function to decrypt author name
 		 */
     private function decrypt( $encid ) {
-        
+
       // since 4.0.0 mcrypt_decrypt is no longer supported, always use openssl_decrypt
+      // since 4.0.7 fall back to plain PHP where OpenSSL has no Blowfish
+      if ( $this->blowfish() ) {
+        return base_convert( $this->blowfish()->decrypt( pack('H*', $encid) ), 36, 10 );
+      }
+
       return base_convert( openssl_decrypt( pack('H*', $encid), 'BF-ECB', $this->_key, OPENSSL_RAW_DATA ), 36, 10 );
-      
+
+    }
+
+
+    /**
+     * get the plain PHP Blowfish if OpenSSL can't do BF-ECB
+     *
+     * OpenSSL 3 only has Blowfish in its legacy provider, which most servers don't load,
+     * so openssl_encrypt() returned false and every author link lost its slug.
+     * The plain PHP version gives the same slugs OpenSSL did.
+     *
+     * @since  4.0.7
+     * @access private
+     * @return object|false false if OpenSSL can do it
+     */
+    private function blowfish() {
+
+      if ( null === $this->_blowfish ) {
+
+        $this->_blowfish = false;
+
+        if ( ! function_exists( 'openssl_encrypt' ) || false === @openssl_encrypt( '', 'BF-ECB', $this->_key, OPENSSL_RAW_DATA ) ) {
+
+          // don't leave our failure in OpenSSL's error queue for other code to find
+          while ( function_exists( 'openssl_error_string' ) && openssl_error_string() ) {}
+
+          require_once plugin_dir_path( $this->get_plugin_file() ) . 'inc/class-smart-user-slug-hider-blowfish.php';
+          $this->_blowfish = new PP_Smart_User_Slug_Hider_Blowfish( $this->_key );
+
+        }
+
+      }
+
+      return $this->_blowfish;
+
     }
 
     

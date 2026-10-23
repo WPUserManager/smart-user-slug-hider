@@ -49,7 +49,7 @@ function pp_smart_user_slug_hider() {
     'slug'      => pathinfo( dirname( __FILE__ ) . '/smart-user-slug-hider.php', PATHINFO_FILENAME ),
     'name'      => 'Smart User Slug Hider',
     'shortname' => 'Smart User Slug Hider',
-    'version'   => '4.0.6'
+    'version'   => '4.0.7'
   ) );
     
 }

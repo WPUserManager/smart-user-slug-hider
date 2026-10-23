@@ -5,15 +5,15 @@
  *
  * Peter's Plugins Foundation 09
  *
- * @package    PPF09
+ * @package    WPUMPPF1
  * @author     Peter Raschendorfer
  * @license    GPL2+
  */
  
-if ( !class_exists( 'PPF09_SubClass' ) ) {
+if ( !class_exists( 'WPUMPPF1_SubClass' ) ) {
   
   
-  abstract class PPF09_SubClass extends PPF09_Class {
+  abstract class WPUMPPF1_SubClass extends WPUMPPF1_Class {
     
     /**
      * reference to core class
