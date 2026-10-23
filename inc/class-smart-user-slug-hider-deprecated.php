@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 if ( !class_exists( 'PP_Smart_User_Slug_Hider_Deprecated' ) ) {
   
-  class PP_Smart_User_Slug_Hider_Deprecated extends PPF09_SubClass {  
+  class PP_Smart_User_Slug_Hider_Deprecated extends WPUMPPF1_SubClass {  
     
     /**
 	   * Do Init

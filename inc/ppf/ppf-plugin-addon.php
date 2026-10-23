@@ -5,15 +5,15 @@
  *
  * Peter's Plugins Foundation 09
  *
- * @package    PPF09
+ * @package    WPUMPPF1
  * @author     Peter Raschendorfer
  * @license    GPL2+
  */
 
  
-if ( !class_exists( 'PPF09_Plugin_Addon' ) ) {
+if ( !class_exists( 'WPUMPPF1_Plugin_Addon' ) ) {
   
-  abstract class PPF09_Plugin_Addon extends PPF09_Plugin {
+  abstract class WPUMPPF1_Plugin_Addon extends WPUMPPF1_Plugin {
     
     /**
      * Base Plugin Name

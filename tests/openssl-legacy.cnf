@@ -1,0 +1,15 @@
+# Loads OpenSSL 3's legacy provider (Blowfish) next to the default one, for tests/test-blowfish.php.
+openssl_conf = openssl_init
+
+[openssl_init]
+providers = provider_sect
+
+[provider_sect]
+default = default_sect
+legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1

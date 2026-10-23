@@ -5,15 +5,15 @@
  *
  * Peter's Plugins Foundation 09
  *
- * @package    PPF09
+ * @package    WPUMPPF1
  * @author     Peter Raschendorfer
  * @license    GPL2+
  */
  
-if ( !class_exists( 'PPF09_Admin' ) ) {
+if ( !class_exists( 'WPUMPPF1_Admin' ) ) {
   
   
-  abstract class PPF09_Admin extends PPF09_SubClass {
+  abstract class WPUMPPF1_Admin extends WPUMPPF1_SubClass {
     
     
     /**
@@ -204,64 +204,25 @@ if ( !class_exists( 'PPF09_Admin' ) ) {
      * @since  PPF01
      * @param  string $key      option key name
      * @param  string $title    title
-     * @param  string $help     anchor to link to in manual
-     * @param  string $video    YouTube video ID
+     * @param  string $help     no longer used: the manual it linked to is gone
+     * @param  string $video    no longer used: the videos it linked to are gone
      * @param  string $note     second line
      * @param  bool   $disabled true/false (optional)
      * @access public
      */
     public function print_slider_check( $key, $title, $help, $video, $note, $disabled = false ) {
-      
+
       $dis = '';
       if ( $disabled ) {
         $dis = ' disabled="disabled"';
       }
-      
-      $hlp = '';
-      if ( ! empty( $help ) ) {
-        $hlp = $this->add_manual_link( $help );
-      }
-      
-      $vid = '';
-      if ( ! empty( $video ) ) {
-        $vid = $this->add_video_link( $video );
-      }
-      
+
       $add = '';
       if ( ! empty( $note ) ) {
         $add = '<br />' . $note;
       }
        
-      echo '<p class="toggle"><span class="slider"><input type="checkbox" name="' . $this->settings()->get_option_key_name( $key ) . '" id="' . $this->core()->get_plugin_slug() . '-' . $key . '" value="1"' . checked( true, $this->settings()->get( $key ), false ) . $dis . ' /><label for="' . $this->core()->get_plugin_slug() . '-' . $key . '" class="check"></label></span><span class="caption">' . $title . $hlp . $vid . $add . '</span></p>';
-       
-    }
-    
-    
-    /**
-     * helper function to add a plugin manual link
-     *
-     * @since PPF01
-     * @param string $anchor name of the anchor to link to
-     * @return string
-     * @access private
-     */
-    private function add_manual_link( $anchor = '' ) {
-       
-      return ' <a class="dashicons dashicons-editor-help" href="https://petersplugins.com/' . $this->core()->get_plugin_slug() . '/manual/#' . $anchor . '"></a>';
-       
-    }
-    
-    /**
-     * helper function to add a video link
-     *
-     * @since PPF01
-     * @param string $youtubeid ID of the YouTube video
-     * @return string
-     * @access private
-     */
-    private function add_video_link( $youtubeid = '' ) {
-       
-      return ' <a class="dashicons dashicons-video-alt3" href="https://youtu.be/' . $youtubeid . '" data-lity></a>';
+      echo '<p class="toggle"><span class="slider"><input type="checkbox" name="' . $this->settings()->get_option_key_name( $key ) . '" id="' . $this->core()->get_plugin_slug() . '-' . $key . '" value="1"' . checked( true, $this->settings()->get( $key ), false ) . $dis . ' /><label for="' . $this->core()->get_plugin_slug() . '-' . $key . '" class="check"></label></span><span class="caption">' . $title . $add . '</span></p>';
        
     }
     
@@ -502,7 +463,7 @@ if ( !class_exists( 'PPF09_Admin' ) ) {
       echo '<div class="pp-admin-page-header">';
       echo $this->_toolbar;
       echo '<div class="pp-admin-page-title"><h1>' . $this->core()->get_plugin_shortname() . '</h1>';
-	  echo '<p><strong>PLEASE NOTE</strong><br />Development, maintenance and support of this plugin has been retired. You can use this plugin as long as is works for you. Thanks for your understanding.<br />Regards, Peter</p>';
+	  echo '<p>Need help? Ask in the <a href="' . esc_url( 'https://wordpress.org/support/plugin/' . $this->core()->get_plugin_slug() . '/' ) . '">support forum</a>.</p>';
 	  echo '</div>';
       $this->print_setting_sections_nav();
       echo '</div>';

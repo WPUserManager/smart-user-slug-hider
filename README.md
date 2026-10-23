@@ -16,3 +16,9 @@ The tag runs `.github/workflows/release.yml`: the shared
 everything not in `.distignore`, checks all three versions match the tag,
 deploys to wordpress.org SVN (org secrets `SVN_USERNAME`, `SVN_PASSWORD`) and
 creates the GitHub release. Pull requests run the same build as a dry run.
+
+## Tests
+
+`tests/test-blowfish.php` checks the plain PHP Blowfish (used where OpenSSL 3 has no
+Blowfish) against OpenSSL's own BF-ECB. The file says how to run it with OpenSSL 3's
+legacy provider. `tests/` is left out of the release zip.

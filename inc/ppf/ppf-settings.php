@@ -5,15 +5,15 @@
  *
  * Peter's Plugins Foundation 09
  *
- * @package    PPF09
+ * @package    WPUMPPF1
  * @author     Peter Raschendorfer
  * @license    GPL2+
  */
  
-if ( !class_exists( 'PPF09_Settings' ) ) {
+if ( !class_exists( 'WPUMPPF1_Settings' ) ) {
   
   
-  abstract class PPF09_Settings extends PPF09_SubClass {
+  abstract class WPUMPPF1_Settings extends WPUMPPF1_SubClass {
   
     /**
      * name of settings in databse (meta_key)
