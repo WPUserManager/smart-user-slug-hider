@@ -1,0 +1,10 @@
+# Left out of the release zip and the wordpress.org SVN trunk.
+# Read by the shared deploy workflow (rsync --exclude-from).
+/.git
+/.github
+/.gitignore
+/.gitattributes
+/.distignore
+/release
+/release.json
+/README.md
