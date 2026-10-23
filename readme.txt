@@ -1,6 +1,6 @@
 === Smart User Slug Hider ===
 Contributors: wpusermanager, petersplugins
-Tags: author, authors, user, users, url, link, security, secure, login, permalink, authorlink, author link, userlink, user link, authorpage, author page, classicpress
+Tags: author, author page, username, security, permalink
 Requires at least: 4.0
 Tested up to: 7.1
 Stable tag: 4.0.7
