@@ -21,7 +21,8 @@ creates the GitHub release. Pull requests run the same build as a dry run.
 
 `tests/test-blowfish.php` checks the plain PHP Blowfish (used where OpenSSL 3 has no
 Blowfish) against OpenSSL's own BF-ECB. The file says how to run it with OpenSSL 3's
-legacy provider. `tests/` is left out of the release zip.
+legacy provider. `tests/test-author-link.php` checks that only the user name at the end
+of an author URL is replaced. Both run with plain `php`; `tests/` is left out of the release zip.
 
 ## Listing art
 

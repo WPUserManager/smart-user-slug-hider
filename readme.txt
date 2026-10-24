@@ -3,7 +3,7 @@ Contributors: wpusermanager, petersplugins
 Tags: author, author page, username, security, permalink
 Requires at least: 4.0
 Tested up to: 7.1
-Stable tag: 4.0.7
+Stable tag: 4.0.8
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -54,6 +54,10 @@ The plugin adds two functions that can be used in theme files:
 * This plugin does not send any data to external servers
 
 == Changelog ==
+
+= 4.0.8 (2026-10-24) =
+* Fixed: author links broke when the username also appeared in the domain or path, such as a user called "author" or a domain starting with the username
+* Fixed: author URLs with the real username, or an invalid code, now send HTTP status 404, not 200
 
 = 4.0.7 (2026-10-23) =
 * Maintained again, by WP User Manager
@@ -121,6 +125,9 @@ The plugin adds two functions that can be used in theme files:
 * Initial Release
 
 == Upgrade Notice ==
+
+= 4.0.8 =
+Fixes author links for usernames that also appear in the domain or path, and sends a real 404 for hidden author URLs.
 
 = 4.0.7 =
 Fixes empty author links on servers with OpenSSL 3. Author URLs stay the same.
