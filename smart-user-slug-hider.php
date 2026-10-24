@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name: Smart User Slug Hider
  * Description: Hide usernames in author pages URLs to enhance security
- * Version: 4.0.7
+ * Version: 4.0.8
  * Author: WP User Manager
  * Author URI: https://wpusermanager.com
  * Text Domain: smart-user-slug-hider

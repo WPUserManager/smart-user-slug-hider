@@ -56,6 +56,16 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
     private $_blowfish = null;
 
 
+    /**
+     * did the main query ask for an author we have to hide?
+     *
+     * @since  4.0.8
+     * @var    bool
+     * @access private
+     */
+    private $_not_found = false;
+
+
 	/**
 	 * do plugin init
 	 */
@@ -88,6 +98,7 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
 
 			
       add_action( 'pre_get_posts', array( $this, 'alter_query' ), 99 );
+      add_action( 'wp', array( $this, 'send_not_found_status' ) );
       add_action( 'bp_include', array( $this, 'activate_buddypress_support' ) );
       
       add_filter( 'author_link', array( $this, 'alter_link' ), 99, 3 );
@@ -128,9 +139,35 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
      * used by author_link filter
 		 */
     function alter_link( $link, $author_id, $author_nicename ) {
-      
-      return str_replace ( '/' . $author_nicename, '/' . $this->encrypt( $author_id ), $link );
-      
+
+      // since 4.0.8 only the name at the end of the URL, not a domain or folder that matches it
+      return self::replace_name_in_url( $link, $author_nicename, $this->encrypt( $author_id ) );
+
+    }
+
+
+    /**
+     * replace the user name at the end of an author or member URL with the coded slug
+     *
+     * str_replace() on the whole URL also replaced a domain or folder matching the user name,
+     * e.g. jane.example/author/jane/. URLs that don't end in the name, such as plain
+     * permalinks (?author=1), come back unchanged.
+     *
+     * @since  4.0.8
+     * @access public
+     * @param  string $url      author or member URL
+     * @param  string $nicename the user's nicename
+     * @param  string $slug     the coded slug
+     * @return string
+     */
+    public static function replace_name_in_url( $url, $nicename, $slug ) {
+
+      if ( '' === (string) $nicename ) {
+        return $url;
+      }
+
+      return preg_replace( '#/' . preg_quote( $nicename, '#' ) . '(?=/?(?:[?\#].*)?$)#', '/' . $slug, $url, 1 );
+
     }
     
     
@@ -158,7 +195,8 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
       
       if ( $user ) {
         
-        $domain = str_replace ( '/' . $user->user_nicename, '/' . $this->encrypt( $user->ID ), $domain );
+        // since 4.0.8 only the name at the end of the URL
+        $domain = self::replace_name_in_url( $domain, $user->user_nicename, $this->encrypt( $user->ID ) );
         
       }
       
@@ -179,28 +217,66 @@ if ( !class_exists( 'PP_Smart_User_Slug_Hider' ) ) {
           $user = get_user_by( 'id', $this->decrypt( $query->query_vars['author_name'] ) );
           
           if ( $user ) {
-            
+
             $query->set( 'author_name', $user->user_nicename );
-            
+
           } else {
-            
-            $query->is_404 = true;
-            $query->is_author = false;
-            $query->is_archive = false;
+
+            $this->not_found( $query );
           }
-          
+
         } else {
-          
-          $query->is_404 = true;
-          $query->is_author = false;
-          $query->is_archive = false;
-          
+
+          $this->not_found( $query );
+
         }
-        
+
       }
-      
+
       return;
-      
+
+    }
+
+
+    /**
+     * show the 404 template for an author we have to hide
+     *
+     * @since  4.0.8 (was part of alter_query)
+     * @access private
+     * @param  WP_Query $query
+     */
+    private function not_found( $query ) {
+
+      $query->is_404 = true;
+      $query->is_author = false;
+      $query->is_archive = false;
+
+      if ( $query->is_main_query() ) {
+        $this->_not_found = true;
+      }
+
+    }
+
+
+    /**
+     * send HTTP status 404 along with the 404 template
+     * used by wp action
+     *
+     * WP::handle_404() sends no status for a query that's already a 404, so the page
+     * said "not found" but answered 200.
+     *
+     * @since  4.0.8
+     * @access public
+     */
+    function send_not_found_status() {
+
+      if ( $this->_not_found ) {
+
+        status_header( 404 );
+        nocache_headers();
+
+      }
+
     }
     
     
